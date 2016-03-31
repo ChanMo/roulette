@@ -3,6 +3,7 @@
 @import 'settings';
 @import 'foundation';
 //@import 'motion-ui';
+@import 'font-awesome';
 @import 'chen';
 
 @include foundation-global-styles;
@@ -151,9 +152,6 @@ body {
     font-size: 0.75rem;
     font-weight: 300;
     color: $white*0.1;
-}
-
-.nearby-group-item {
 }
 
 .auto-scroll {
