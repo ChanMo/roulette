@@ -14,6 +14,7 @@ gulp.task('sass', function(){
         .pipe(sass({
             includePaths: [
               'bower_components/foundation-sites/scss',
+              'bower_components/motion-ui/src',
               'bower_components/font-awesome/scss'
             ]
         }))
