@@ -1,16 +1,10 @@
-#top-bar {
+.top {
     height: 2em;
     font-weight: 400;
     font-size: 1.25em;
-    img {
-        height: 1em;
-        margin: 0.5em 0;
-    }
-    .small-8 {
-        line-height: 2em;
-    }
 }
-#footer-bar {
+
+.footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -18,12 +12,9 @@
     text-align: center;
 }
 
-.box {
-    margin-top: 1em;
-    background: #fff;
-}
-.image-circle {
+.circle {
     width: 50%;
     border-radius: 50%;
     overflow: hidden;
+    display: block;
 }
