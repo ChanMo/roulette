@@ -3,3 +3,4 @@ bower_components
 node_modules
 app/css
 app/*.html
+app/img/*
