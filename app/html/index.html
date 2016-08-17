@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 {% block main %}
+<div class="bg"></div>
+
+<div class="code-box">
+  <span>请输入抽奖码</span>
+  <input type="text">
+  <button class="button" onclick="check_code()">提交</button>
+</div>
+
+<div class="error-alert">
+  <span>您的抽奖次数已用完</span>
+  <button class="button" onclick="close_box('.error-alert');">关闭</button>
+</div>
+
 <div id="result-bg">
   <div class="result-bg1"></div>
   <div class="result-bg2"></div>

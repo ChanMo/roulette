@@ -1,13 +1,31 @@
-//$(document).foundation();
 $(function(){
-  /** create result box **/
-  //show_box();
+  show_box(".code-box", "10%", "25%", "80%", 200);
   /** prevent default touchmove event **/
   $("body").bind('touchmove dbclick', function(e){
     e.preventDefault();
   });
 
 });
+
+/**
+ * input code
+ */
+function check_code(){
+  var code = $(".code-box").find("input").val();
+  if(code == ''){
+    $(".code-box").find("span").html('您的抽奖码不正确');
+  }else{
+    $.get('http://qifeng.chirongkeji.com/prize/check_code/?code='+code, function(data){
+      console.log(data);
+      if(data.code == '001'){
+        $("body").data("code", code);
+        close_box(".code-box");
+      }else{
+        $(".code-box").find("span").html('您的抽奖码不正确');
+      }
+    });
+  }
+}
 
 /**
  * set rottle main
@@ -95,7 +113,7 @@ function set_rottle(prize_list){
     point_w,
     point_w*172/106
   ).attr({
-    onclick: 'rottle()'
+    onclick: 'rottle(this)'
   });
 
   /** rule **/
@@ -173,7 +191,7 @@ function set_rottle(prize_list){
 
   /** close button **/
   var close = result.image("img/close.png", (width-316/2.5)/2, "70%", 316/2.5, 106/2.5);
-  close.attr({class:'result-box-close',onclick:'close_box()'});
+  close.attr({class:'result-box-close',onclick:'close_box(".result-box");$("#result-bg").hide();'});
 }
 
 
@@ -202,7 +220,7 @@ function get_random_pn(){
 /**
  * start
  **/
-function rottle(){
+function rottle(ele){
   var prizes = $("#prizes");
   var index = parseInt(Math.random() * prizes.find("path").length);
   var degree = -index * 360 / 12;
@@ -215,48 +233,58 @@ function rottle(){
     ease: Quad.easeInOut,
     //overwrite: 'preexisting',
     immediateRender: 'false',
+    onStart: function(){
+      /** remove element rottle event **/
+      $(ele).removeAttr("onclick");
+    },
     onComplete:function(){
+      /** add element new click event **/
+      $(ele).bind("click", function(){
+        show_box(".error-alert", "10%", "30%", "80%", 160);
+      });
+
       var text = prizes.find("text").eq(index).html();
       var image = prizes.find("image").eq(index).attr("href");
       $(".result-box-image").attr("href", image);
       $(".result-box-name").html(text);
-      show_box();
+
+      document.getElementById("open-audio").play();
+      $("#result-bg").show();
+      show_box(".result-box", 0, 0, "100%", "100%");
     }
   });
 }
 
 
+/*****************8 common function *************************/
+
 /**
- * show box
+ * show_box
  */
-function show_box(){
-  document.getElementById("open-audio").play();
-  $("#result-bg").show();
-  TweenMax.fromTo($(".result-box"), .5, {
+function show_box(e, left, top, width, height){
+  $(".bg").show();
+  TweenMax.fromTo(e, .5, {
     left: "50%",
     top: "50%",
     width: 0,
-    height: 0
+    height: 0,
+    display: 'none'
   },{
-    left:0,
-    top:0,
-    width:"100%",
-    height:"100%",
+    left: left,
+    top: top,
+    width: width,
+    height: height,
+    display: 'block',
     ease:Elastic.easeOut
   });
 }
-
-
-/**
- * close box
- */
-function close_box(){
-  document.getElementById("open-audio").play();
-  TweenMax.to($(".result-box"), .1, {
+function close_box(e){
+  $(".bg").hide();
+  TweenMax.to(e, .1, {
     left:"50%",
     top:"50%",
     width:0,
-    height:0
+    height:0,
+    display: 'none'
   });
-  $("#result-bg").hide();
 }
