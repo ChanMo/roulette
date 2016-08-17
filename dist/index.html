@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js" lang="zh-hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>大转盘</title>
+    <link rel="stylesheet" href="css/app.min.css">
+  </head>
+  <body>
+    
+<div id="result-bg">
+  <div class="result-bg1"></div>
+  <div class="result-bg2"></div>
+</div>
+<audio src="img/bg.wav" autoplay="autoplay" loop="loop"></audio>
+<audio id="open-audio" src="http://www.downloadfreesound.com/wp-content/uploads/2013/08/Beep3.wav"></audio>
+
+    <script src="js/app.min.js"></script>
+    
+<script>
+  var member = 1;
+  var prize_list = [
+    {'name':'test','image':'img/1.png'},
+    {'name':'test','image':'img/2.png'},
+    {'name':'test','image':'img/3.png'},
+    {'name':'test','image':'img/4.png'},
+    {'name':'test','image':'img/5.png'},
+    {'name':'test','image':'img/6.png'},
+    {'name':'test','image':'img/7.png'},
+    {'name':'test','image':'img/8.png'},
+    {'name':'test','image':'img/1.png'},
+    {'name':'test','image':'img/2.png'},
+    {'name':'test','image':'img/3.png'},
+    {'name':'test','image':'img/4.png'}
+  ];
+
+set_rottle(prize_list);
+</script>
+
+ </body>
+</html>
