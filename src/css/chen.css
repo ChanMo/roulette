@@ -1,0 +1,17 @@
+.top {
+  height: 2em;
+  font-weight: 400;
+  font-size: 1.25em; }
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center; }
+
+.circle {
+  width: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: block; }
