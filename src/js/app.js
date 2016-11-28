@@ -1,12 +1,24 @@
 $(function(){
     /** remove loading **/
-    $(".loading").hide();
   /** create result box **/
   //show_box();
   /** prevent default touchmove event **/
   $("body").bind('touchmove dbclick', function(e){
     e.preventDefault();
   });
+
+  window.setInterval(function(){
+    $(".marquee-item:even").css("fill","white");
+    $(".marquee-item:odd").css("fill","gold");
+    window.setTimeout(function(){
+      $(".marquee-item:even").css("fill","gold");
+      $(".marquee-item:odd").css("fill","white");
+    },1000);
+  },2000);
+
+  window.setTimeout(function(){
+    $(".loading").fadeOut();
+  }, 2000);
 
 });
 
@@ -42,9 +54,10 @@ function set_rottle(prize_list){
   var m_cx = cx - Math.sin(2/36*Math.PI)*(r-10);
   var m_cy = cy - Math.cos(2/36*Math.PI)*(r-10);
   for(var i=0;i<36;i++){
-    light = (i%2) ? "light-on" : "light-off";
+    //light = (i%2) ? "light-on" : "light-off";
     rottle.circle(m_cx,m_cy,4).attr({
-      class: "marquee-item " + light,
+      //class: "marquee-item " + light,
+      class: "marquee-item",
       transform:"rotate("+360/36*i+" "+cx+","+cy+")"
     });
   }
@@ -70,19 +83,20 @@ function set_rottle(prize_list){
     var path = rottle.path("M"+p_cx1+" "+p_cy1+" A"+p_r+" "+p_r+" 0,0,0 "+p_cx2+" "+p_cy2+" L"+cx+" "+cy+" Z").attr({
       transform:"rotate("+degree*i+" "+cx+","+cy+")",
       fill:background,
-      'data-id': prize_list[i].id
+      'data-id': prize_list[i].id,
+      'data-probability': prize_list[i].probability
     });
 
     // prize name
     var text = rottle.text(t_x,t_y,prize_list[i].name).attr({
       transform:"rotate("+degree*i+" "+cx+","+cy+")",
       'text-anchor':"middle",
-      fill: '#bc00c7',
-      'font-size': 14
+      fill: 'green',
+      'font-size': 12
     });
 
     // prize image
-    var image = rottle.image(prize_list[i].image,t_x-10,t_y+10,"20","20").attr({
+    var image = rottle.image(prize_list[i].image,t_x-10,t_y+10,"22","22").attr({
       transform:"rotate("+degree*i+" "+cx+","+cy+")"
     });
     g.add(path,text,image);
@@ -108,8 +122,8 @@ function set_rottle(prize_list){
 
   /************************ create result box ***********************/
   var result = Snap("100%","100%").attr({class:"result-box"});
-  var cx2 = width/2;
-  var cy2 = height/2.2;
+  var cx2 = width*0.5;
+  var cy2 = height*0.45;
 
   /** create stars **/
   /**
@@ -151,37 +165,20 @@ function set_rottle(prize_list){
   close.attr({class:'result-box-close',onclick:'close_box()'});
 }
 
-
-/**
- * set result box animation
- */
-/**
-function set_star_ani(){
-  var stars = $(".result-box-star");
-  for(var i=0; i<stars.length; i++){
-    TweenMax.to(stars[i], 5, {
-      x: Math.random()*200*get_random_pn(),
-      y: Math.random()*200*get_random_pn(),
-      opacity: 0,
-      delay: Math.random() * 10,
-      ease: Strong.easeInOut,
-      repeat: -1
-    });
-  }
-}
-**/
-
-function get_random_pn(){
-  return (Math.random() < 0.5) ? -1 : 1;
-}
-
-
 /**
  * start
  **/
 function rottle(){
   var prizes = $("#prizes");
-  var index = parseInt(Math.random() * prizes.find("path").length);
+
+  // make random
+  var r = Math.random();
+  var index = 0;
+  while(r > 0){
+    r -= parseFloat(prizes.find("path").eq(index++).data("probability"));
+  }
+  index--;
+  //var index = parseInt(Math.random() * prizes.find("path").length);
   var degree = -index * 360 / 12;
   var end_degree = 360*10 + degree;
 
@@ -228,7 +225,7 @@ function show_box(){
  * close box
  */
 function close_box(){
-  document.getElementById("open-audio").play();
+  //document.getElementById("open-audio").play();
   TweenMax.to($(".result-box"), .1, {
     left:"50%",
     top:"50%",

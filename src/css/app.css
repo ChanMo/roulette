@@ -23,10 +23,16 @@ html, body {
     r: 3; } }
 
 .light-on {
-  animation: lighton 1s linear infinite; }
+  animation: lighton 1s linear infinite;
+  -moz-animation: lighton 1s linear infinite;
+  -webkit-animation: lighton 1s linear infinite;
+  -o-animation: lighton 1s linear infinite; }
 
 .light-off {
-  animation: lightoff 1s linear infinite; }
+  animation: lightoff 1s linear infinite;
+  -moz-animation: lightoff 1s linear infinite;
+  -webkit-animation: lightoff 1s linear infinite;
+  -o-animation: lightoff 1s linear infinite; }
 
 @keyframes result-bg-ani {
   from {
@@ -53,18 +59,26 @@ html, body {
     background-repeat: no-repeat;
     background-position: 50% 50%; }
   #result-bg .result-bg1 {
-    background-image: url(http://qifeng.chirongkeji.com/static/prize/img/light_white.png);
+    background-image: url(../img/light_white.png);
     background-size: 400px auto;
     opacity: 0.95;
     animation: result-bg-ani 20s linear infinite; }
   #result-bg .result-bg2 {
-    background-image: url(http://qifeng.chirongkeji.com/static/prize/img/light_golden.png);
+    background-image: url(../img/light_golden.png);
     background-size: 500px auto;
     opacity: 0.4;
     animation: result-bg-ani2 20s linear infinite; }
 
 .result-box {
   position: fixed; }
+
+@keyframes loading-ani {
+  0% {
+    top: 46%; }
+  50% {
+    top: 50%; }
+  100% {
+    top: 46%; } }
 
 .loading {
   position: fixed;
@@ -77,4 +91,6 @@ html, body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); }
+    width: 15vmin;
+    transform: translate(-50%, -50%);
+    animation: loading-ani 1.5s linear infinite; }
